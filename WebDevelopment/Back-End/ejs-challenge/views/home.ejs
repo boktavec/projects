@@ -1,0 +1,16 @@
+<%- include("partials/header"); -%>
+
+<h1>Home</h1>
+
+<p><%= homeSC%></p>
+
+<% newContent.forEach(function(diaryItems){ %>
+
+<h1><%=diaryItems.title%></h1>
+<p><%=diaryItems.content.substr(0, 100) + " ... "%>
+<a href="/diaryItems/<%=diaryItems.titles%>">Read More</a>
+</p>
+
+<% }) %>
+
+<%- include("partials/footer"); -%>

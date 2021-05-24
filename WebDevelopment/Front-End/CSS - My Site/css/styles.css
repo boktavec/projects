@@ -1,0 +1,99 @@
+/*****************CLASS*******************/
+body {
+  margin: 0;
+  text-align: center;
+  font-family: 'Merriweather', serif;
+}
+
+h1 {
+  font-size: 5.625rem;
+  margin: 50px auto 0 auto;
+  font-family: 'Sacramento', cursive;
+
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+p {
+  color: #40514E;
+}
+
+hr {
+  padding-top: 3%;
+  border: 5px silver;
+  border-style: none none dotted;
+  width: 5%;
+}
+
+/*****************TAG*******************/
+.top-container {
+  background-color: #87a7b3;
+  position: relative;
+  padding-top: 100px;
+}
+
+.middle-container {}
+
+.bottom-container {
+  background-color: #87a7b3;
+}
+
+.pro {
+  text-decoration: underline;
+}
+
+.cyber-img {
+  height: 200px;
+  width: 200px;
+  float: left;
+  margin-right: 30px;
+}
+
+.webdev-img {
+  height: 200px;
+  width: 200px;
+  float: right;
+  margin-left: 30px;
+}
+
+.me {
+  padding-top: 10px;
+  height: 200px;
+  width: 200px;
+}
+
+.top-cloud {
+  position: absolute;
+  right: 300px;
+  top: 50px;
+}
+
+.bottom-cloud {
+  position: absolute;
+  left: 300px;
+  bottom: 300px;
+}
+
+.skill-row {
+  width: 50%;
+  margin: 100px auto 100px auto;
+  text-align: left;
+  line-height: 2;
+}
+
+.footer-link {
+  padding-top: 5;
+}
+
+.license {
+  color: #EAF6F6;
+}
+/*****************ID*******************/
