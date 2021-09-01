@@ -20,7 +20,7 @@ function initMap() {
 
   //Loop through the array of coordinates/trip to simulate trip...
   mapLoc.forEach((x, i) => {
-    //loops through coordinates (x) and adds a delay of i between each set of coordinates
+    //loops through coordinates (x) and adds a delay of (i) between each set of coordinates
     setTimeout(() => {
       marker.setPosition({ lat: x.Lat, lng: x.Lon }); //sets new position of marker with current x-coordinates
       map.setCenter({ lat: x.Lat, lng: x.Lon }); //sets center of map with current x-coordinates
