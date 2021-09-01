@@ -24,7 +24,7 @@ function initMap() {
     setTimeout(() => {
       marker.setPosition({ lat: x.Lat, lng: x.Lon }); //sets new position of marker with current x-coordinates
       map.setCenter({ lat: x.Lat, lng: x.Lon }); //sets center of map with current x-coordinates
-    }, i * 500); // i*500, creates a delay of 500 miliseconds (or .5 seconds) between each coordinate output
+    }, i * 500); // i*500, creates a delay of 500 milliseconds (or .5 seconds) between each coordinate output
   });
   //Replace array of pre-made coordinates with a data-fetch of real-time coordinates to have a map with up-to-date locations
 }
