@@ -1,0 +1,55 @@
+/**********************CLASS***********************/
+.gridWrap {
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 100%;
+}
+
+.gridCol {
+  padding: 8px;
+}
+
+.boxSelector {
+  margin: 0 2%;
+  box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: 79em;
+  height: 10em;
+  overflow: auto;
+}
+
+/**********************ID***********************/
+#map {
+  margin: 3% 0 0.5% 2% !important;
+  height: 27em;
+  width: 55em;
+  box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+#data {
+  margin: 7% 1% 0 0 !important;
+  height: 27em;
+  width: 23.2em;
+  box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: left;
+}
+
+#dataTitle {
+  margin: 0.5% 0 0 1%;
+}
+
+#cardata {
+  margin: 0 0 0 2%;
+}
+
+/**********************ELEMENT***********************/
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
