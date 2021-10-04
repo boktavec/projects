@@ -62,9 +62,7 @@ const locFilter = (data) => {
     return 0;
   } else if (pNp([utmZ.Easting, utmZ.Northing], ptc)) {
     return 1;
-  } else if (pNp([utmZ.Easting, utmZ.Northing], stock)) {
-    return 2;
-  }
+  } 
 };
 
 io.on("connection", (socket) => {
