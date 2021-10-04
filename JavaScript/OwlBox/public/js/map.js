@@ -1,11 +1,12 @@
 let map;
 const image = "https://img.icons8.com/fluent/48/000000/car-top-view.png";
 let clickMarker;
+const socket = io();
 
-const filler = { lat: xx.xxxxxx, lng: xx.xxxxx }; //Filler initial coordinated to center the map and marker
-const home = { lat: xx.xxxxxx, lng: xx.xxxxx }; //Initial coordinated to center the map and marker
-const ksaw = { lat: xx.xxxxxx, lng: xx.xxxxx }; //Coordinates for Marietta campus of KSAW
-const ptc = { lat: xx.xxxxxx, lng: xx.xxxxx }; //Coordinates for city hall Peachtree Corners
+const filler = { lat: xx.xxxxx, lng: xx.xxxxx }; //Filler initial coordinated to center the map and marker
+const home = { lat: xx.xxxxx, lng: xx.xxxxx }; //Initial coordinated to center the map and marker
+const ksaw = { lat: xx.xxxxx, lng: xx.xxxxx }; //Coordinates for Marietta campus of KSAW
+const ptc = { lat: xx.xxxxx, lng: xx.xxxxx }; //Coordinates for city hall Peachtree Corners
 
 //Initiate map on webpage
 function initMap() {
@@ -29,26 +30,7 @@ function initMap() {
     icon: image, //image of car marker
   });
 
-  //Loop through the array of coordinates/trip to simulate trip...
-  carBox1.forEach((x, i) => {
-    //loops through coordinates (x) and adds a delay of (i) between each set of coordinates
-    setTimeout(() => {
-      cb1_marker.setPosition({ lat: x.Lat, lng: x.Lon }); //sets new position of marker with current x-coordinates
-
-      //Zooms in on specific box when clicked
-      if (clickMarker === "carBox1") {
-        map.setCenter(cb1_marker.position);
-        map.setZoom(18); //sets zoom of map to specific marker
-        $("#data").empty();
-        document.getElementById("data").innerHTML = JSON.stringify(x);
-      }
-
-      $("#cbox1").click(() => {
-        clickMarker = "carBox1"; //Defines what marker is clicked
-      });
-    }, i * 200); // i*500, creates a delay of 500 milliseconds (or .5 seconds) between each coordinate output
-  });
-
+  // //Loop through the array of coordinates/trip to simulate trip...
   carBox2.forEach((y, i) => {
     //loops through coordinates (y) and adds a delay of (i) between each set of coordinates
     setTimeout(() => {
@@ -83,6 +65,7 @@ function initMap() {
     document.getElementById("ptc").style.display = "none"; //hides boxes of this location
     map.setZoom(15);
     clickMarker = ""; //removes marker selection
+    socket.emit("selKSU");
   });
 
   //Displays specific boxes for certain locations and zooms in on that location area
@@ -92,5 +75,22 @@ function initMap() {
     document.getElementById("ptc").style.display = "none"; //hides boxes of this location
     map.setZoom(15);
     clickMarker = ""; //removes marker selection
+    socket.emit("selPTC");
+  });
+
+  socket.on("data", (data) => {
+    let x = data;
+    cb1_marker.setPosition({ lat: x.Lat, lng: x.Lon }); //sets new position of marker with current x-coordinates
+    //Zooms in on specific box when clicked
+    if (clickMarker === "carBox1") {
+      map.setCenter(cb1_marker.position);
+      map.setZoom(18); //sets zoom of map to specific marker
+      $("#data").empty();
+      document.getElementById("data").innerHTML = JSON.stringify(x);
+    }
+
+    $("#cbox1").click(() => {
+      clickMarker = "carBox1"; //Defines what marker is clicked
+    });
   });
 }
