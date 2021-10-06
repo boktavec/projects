@@ -8,6 +8,8 @@
   <link rel="stylesheet" type="text/css" href="/css/styles.css" />
  
 </head>
+<script src = "/socket.io/socket.io.js"></script>
+
 
 <body>
   <div class="gridWrap">
@@ -20,27 +22,16 @@
     </div>
   </div>
   <div class="boxSelector">
+    <!-- Containers for location selection -->
     <div class="locSel">
       <span id="allSel">HOME</span>
       <span id="ksuSel">KSU</span>
       <span id="ptcSel">PTC</span>
     </div>
-
+    <!-- Containers for box selection -->
     <div class="location" id="ptc">
-      <div class= "owlbox" id="cbox1">
-        <span>CarBox1</span> 
-      </div>
-        <div class= "owlbox" id="cbox2">
-          <span>CarBox2</span> 
-        </div>
     </div>
     <div class="location" id="ksaw">
-      <div class= "owlbox" id="cbox3">
-        <span>CarBox3</span> 
-      </div>
-      <div class= "owlbox" id="cbox4">
-        <span>CarBox4</span> 
-      </div>
     </div>
     
 
@@ -54,9 +45,7 @@
     async
   ></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="/js/mapdata2.js"></script> <!--js of coordinates in an array of objects-->
-  <script src="/js/mapdata1.js"></script> <!--js of coordinates in an array of objects-->
-  <script src="/js/map.js"></script>  <!-- js of initializing map and displaying/looping through marker-->
+  <script src="/js/map.js"></script>  <!-- js of initializing map and displaying markers and their respective data-->
   
 
 </body>

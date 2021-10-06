@@ -1,52 +1,40 @@
 let map;
-const image = "https://img.icons8.com/fluent/48/000000/car-top-view.png";
+const image = "https://img.icons8.com/fluent/48/000000/car-top-view.png"; //Marker image
+
+// Location selection
 let clickMarker;
+let clickLoc;
+
+// Store created markers in this object
+let markerStore = {};
+
+//Create the socket connection with the server
 const socket = io();
 
-const filler = { lat: xx.xxxxx, lng: xx.xxxxx }; //Filler initial coordinated to center the map and marker
-const home = { lat: xx.xxxxx, lng: xx.xxxxx }; //Initial coordinated to center the map and marker
-const ksaw = { lat: xx.xxxxx, lng: xx.xxxxx }; //Coordinates for Marietta campus of KSAW
-const ptc = { lat: xx.xxxxx, lng: xx.xxxxx }; //Coordinates for city hall Peachtree Corners
+//Initiate all the necessary locations
+const home = { lat: xx.xxxxxx, lng: xx.xxxxxx }; //Initial coordinates to center the map and marker
+const ksaw = { lat: xx.xxxxxx, lng: xx.xxxxxx }; //Coordinates for Marietta campus of KSAW
+const ptc = { lat: xx.xxxxxx, lng: xx.xxxxxx }; //Coordinates for city hall Peachtree Corners
+
+// Creates link to box depending on location and if the container link already exists
+let boxCar = (id) => {
+  if (clickLoc === "kennesaw") {
+    $("#ksaw").append(
+      "<div class = 'owlbox' id ='" + id + "'> <span> " + id + "</span> </div>"
+    );
+  } else if (clickLoc === "ptc") {
+    $("#ptc").append(
+      "<div class = 'owlbox' id ='" + id + "'> <span>" + id + "</span> </div>"
+    );
+  }
+};
 
 //Initiate map on webpage
 function initMap() {
   //Create map and place on webpage using DOM centering it around pre-determined LAT&LONG
   map = new google.maps.Map(document.getElementById("map"), {
-    center: filler,
-    zoom: 12, //How zoomed into the map do you want it
-  });
-
-  // Create marker with it's intial position being home
-  const cb1_marker = new google.maps.Marker({
-    position: home, //Pre-determined coordinates
-    map: map,
-    icon: image, //image of car marker
-  });
-
-  //Create marker with it's intial position being home
-  const cb2_marker = new google.maps.Marker({
-    position: home, //Pre-determined coordinates
-    map: map,
-    icon: image, //image of car marker
-  });
-
-  // //Loop through the array of coordinates/trip to simulate trip...
-  carBox2.forEach((y, i) => {
-    //loops through coordinates (y) and adds a delay of (i) between each set of coordinates
-    setTimeout(() => {
-      cb2_marker.setPosition({ lat: y.Lat, lng: y.Lon }); //sets new position of marker with current y-coordinates
-
-      //Zooms in on specific box when clicked
-      if (clickMarker === "carBox2") {
-        map.setCenter(cb2_marker.position); //sets center of map with current y-coordinates
-        map.setZoom(18); //sets zoom of map to specific marker
-        $("#data").empty();
-        document.getElementById("data").innerHTML = JSON.stringify(y);
-      }
-      $("#cbox2").click(() => {
-        clickMarker = "carBox2"; //Defines what marker is clicked
-      });
-    }, i * 200); // i*500, creates a delay of 500 milliseconds (or .5 seconds) between each coordinate output
+    center: home,
+    zoom: 10, //How zoomed into the map do you want it
   });
 
   //Displays specific boxes for certain locations and zooms in on that location area
@@ -55,7 +43,8 @@ function initMap() {
     document.getElementById("ksaw").style.display = "none"; //hides boxes of this location
     document.getElementById("ptc").style.display = "initial"; //shows boxes of this location
     map.setZoom(15);
-    clickMarker = "";
+    clickMarker = ""; //removes marker selection
+    clickLoc = ""; //Removes location selection
   });
 
   //Displays specific boxes for certain locations and zooms in on that location area
@@ -64,8 +53,10 @@ function initMap() {
     document.getElementById("ksaw").style.display = "initial"; //shows boxes of this location
     document.getElementById("ptc").style.display = "none"; //hides boxes of this location
     map.setZoom(15);
+    $("#ksaw").empty(); //Empties KSAW container
     clickMarker = ""; //removes marker selection
-    socket.emit("selKSU");
+    clickLoc = "kennesaw"; //Location Kennesaw is selected
+    socket.emit("selKSU"); //Joins KSU room
   });
 
   //Displays specific boxes for certain locations and zooms in on that location area
@@ -74,23 +65,48 @@ function initMap() {
     document.getElementById("ksaw").style.display = "none"; //hides boxes of this location
     document.getElementById("ptc").style.display = "none"; //hides boxes of this location
     map.setZoom(15);
+    $("#ptc").empty(); //Empties PTC container
     clickMarker = ""; //removes marker selection
-    socket.emit("selPTC");
+    clickLoc = "ptc"; //Location PTC is selected
+    socket.emit("selPTC"); //Joins PTC room
   });
 
-  socket.on("data", (data) => {
-    let x = data;
-    cb1_marker.setPosition({ lat: x.Lat, lng: x.Lon }); //sets new position of marker with current x-coordinates
-    //Zooms in on specific box when clicked
-    if (clickMarker === "carBox1") {
-      map.setCenter(cb1_marker.position);
+  // Once data is received through the socket
+  socket.on("data", (x) => {
+    // Pull the name out of the JSON object and remove the quotes from it
+    let id = x.id;
+    let name = id.replace(/^["'](.+(?=["']$))["']$/, "$1");
+
+    // Check the Marker Store object and if the name already exist within the change the position of the marker value.
+    if (markerStore.hasOwnProperty(name)) {
+      markerStore[name].setPosition({ lat: x.Lat, lng: x.Lon });
+      if (!$("#" + name + "").length) {
+        boxCar(name); //Creates box container within the correct location container
+      }
+      // Otherwise create the marker and add it the the marker store object
+    } else {
+      let marker = new google.maps.Marker({
+        position: { lat: x.Lat, lng: x.Lon },
+        map: map,
+        title: name,
+        icon: image, //image of car marker
+      });
+
+      boxCar(name); //Creates box container within the correct location container
+      markerStore[name] = marker; //Adds marker to the Marker object
+    }
+
+    // If specific box is selected -> will zoom in on box and display the data from that box
+    if (clickMarker === name) {
+      map.setCenter(markerStore[name].position);
       map.setZoom(18); //sets zoom of map to specific marker
       $("#data").empty();
       document.getElementById("data").innerHTML = JSON.stringify(x);
     }
 
-    $("#cbox1").click(() => {
-      clickMarker = "carBox1"; //Defines what marker is clicked
+    // Declares what box is being clicked on
+    $("#" + name + "").click(() => {
+      clickMarker = name; //Defines what marker is clicked
     });
   });
 }

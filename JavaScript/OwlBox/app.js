@@ -1,29 +1,28 @@
+// Create and initiate Express server
 const { json } = require("express");
 const express = require("express");
 const app = express(); //Declare express server
-const http = require("http").Server(app);
-const cors = require("cors");
-const io = require("socket.io")(http);
-const dgram = require("dgram");
-const JSONSocket = require("udp-json");
+
+const http = require("http").Server(app); // Create and initiate http server incoporating Express
+const cors = require("cors"); //Allows us to bypass necessary credentials
+const io = require("socket.io")(http); //Websockets
+const dgram = require("dgram"); //UDP sockets
+const JSONSocket = require("udp-json"); //JSON socket
+
+//For filter -> UTM converter and location bubble
 const pNp = require("point-in-polygon");
 const utmObj = require("utm-latlng");
 
+//Initiate UTM converter and UDP & JSON socket
 const utm = new utmObj();
-
-app.set("view engine", "ejs"); //Set view to ejs
-app.use(express.static("public")); //declare file locations
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); //Use JSON within express
-app.use(cors(corsOptions)); //Bypass webpage security
-
-//---- Create JSON UDP Socket----//
 const client = dgram.createSocket("udp4");
 const clientSocket = new JSONSocket(client);
 
+//Socket location
 const ADDRESS = "";
-const PORT = 50001;
-let select = "";
+const PORT = "";
+
+let select = ""; //Location selection
 
 //UTM coordinates -> [UTM E, UTM N, UTM Zone] ~ UTM Zone = 16S
 
@@ -44,32 +43,41 @@ const ksaw = [
   [729923.89, 3757903.05],
 ];
 
+// Bind socket location
 client.bind({
   port: PORT,
   address: ADDRESS,
 });
 
+//Web credential bypass
 const corsOptions = {
   origin: "http://localhost:3000/",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
 
-//----- FILTER -----//
+//Filters data to through location and if certain location is selected it will send the respective data to the client
 const locFilter = (data) => {
   let utmZ = utm.convertLatLngToUtm(data.Lat, data.Lon, 0);
   if (pNp([utmZ.Easting, utmZ.Northing], ksaw)) {
     return 0;
   } else if (pNp([utmZ.Easting, utmZ.Northing], ptc)) {
     return 1;
-  } else if (pNp([utmZ.Easting, utmZ.Northing], stock)) {
-    return 2;
   }
 };
 
+//Express settings
+app.set("view engine", "ejs"); //Set view to ejs
+app.use(express.static("public")); //declare file locations
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); //Use JSON within express
+app.use(cors(corsOptions)); //Bypass webpage security
+
+//Creates Websocket and performs necessary tasks
 io.on("connection", (socket) => {
   console.log("A user is connected");
 
+  //Joins KSAW socket room
   socket.on("selKSU", () => {
     socket.leave("room-ptc");
     socket.join("room-kennesaw");
@@ -77,6 +85,7 @@ io.on("connection", (socket) => {
     select = "kennesaw";
   });
 
+  //Joins PTC socket room
   socket.on("selPTC", () => {
     socket.leave("room-kennesaw");
     socket.join("room-ptc");
