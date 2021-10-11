@@ -1,0 +1,17 @@
+{
+  "name": "owlbox_datadump",
+  "version": "1.0.0",
+  "description": "udp dump for owlbox",
+  "main": "ingress.js",
+  "dependencies": {
+    "dgram": "^1.0.1",
+    "socket.io": "^4.2.0",
+    "udp-json": "^1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "brian oktavec",
+  "license": "ISC"
+}
