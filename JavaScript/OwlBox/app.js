@@ -7,7 +7,6 @@ const http = require("http").Server(app); // Create and initiate http server inc
 const cors = require("cors"); //Allows us to bypass necessary credentials
 const io = require("socket.io")(http); //Websockets
 const dgram = require("dgram"); //UDP sockets
-const JSONSocket = require("udp-json"); //JSON socket
 
 //For filter -> UTM converter and location bubble
 const pNp = require("point-in-polygon");
@@ -16,7 +15,6 @@ const utmObj = require("utm-latlng");
 //Initiate UTM converter and UDP & JSON socket
 const utm = new utmObj();
 const client = dgram.createSocket("udp4");
-const clientSocket = new JSONSocket(client);
 
 //Socket location
 const ADDRESS = "";
@@ -95,13 +93,16 @@ io.on("connection", (socket) => {
 });
 
 //Filter and send data to a room
-clientSocket.on("message-complete", (data) => {
-  if (select === "kennesaw" && locFilter(data) === 0) {
+client.on("message-complete", (data) => {
+  //Convert data to string and JSON parse it so it is usable
+  let x = JSON.parse(String.fromCharCode.apply(String, data));
+
+  if (select === "kennesaw" && locFilter(x) === 0) {
     //send kennesaw data
-    io.to("room-kennesaw").emit("data", data);
-  } else if (select === "ptc" && locFilter(data) === 1) {
+    io.to("room-kennesaw").emit("data", x);
+  } else if (select === "ptc" && locFilter(x) === 1) {
     //send ptc data
-    io.to("room-ptc").emit("data", data);
+    io.to("room-ptc").emit("data", x);
   }
 });
 

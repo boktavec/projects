@@ -41,7 +41,7 @@ function initMap() {
   $("#allSel").click(() => {
     map.setCenter(home); //sets location center
     document.getElementById("ksaw").style.display = "none"; //hides boxes of this location
-    document.getElementById("ptc").style.display = "initial"; //shows boxes of this location
+    document.getElementById("ptc").style.display = "none"; //shows boxes of this location
     map.setZoom(15);
     clickMarker = ""; //removes marker selection
     clickLoc = ""; //Removes location selection
@@ -63,7 +63,7 @@ function initMap() {
   $("#ptcSel").click(() => {
     map.setCenter(ptc); //sets location center
     document.getElementById("ksaw").style.display = "none"; //hides boxes of this location
-    document.getElementById("ptc").style.display = "none"; //hides boxes of this location
+    document.getElementById("ptc").style.display = "initial"; //hides boxes of this location
     map.setZoom(15);
     $("#ptc").empty(); //Empties PTC container
     clickMarker = ""; //removes marker selection
