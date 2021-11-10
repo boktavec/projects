@@ -29,6 +29,24 @@ let boxCar = (id) => {
   }
 };
 
+// Changes the table of box data to the updated data coming in through the socket
+let boxData = (x) => {
+  document.getElementById("obID").innerHTML = x.owlboxID;
+  document.getElementById("msgCnt").innerHTML = x.msgCnt;
+  document.getElementById("tempID").innerHTML = x.tempid;
+  document.getElementById("time").innerHTML = x.time;
+  document.getElementById("lat").innerHTML = x.lat;
+  document.getElementById("long").innerHTML = x.long;
+  document.getElementById("elev").innerHTML = x.elev;
+  document.getElementById("acc").innerHTML = x.accuracy;
+  document.getElementById("trans").innerHTML = x.transmission;
+  document.getElementById("speed").innerHTML = x.speed;
+  document.getElementById("head").innerHTML = x.heading;
+  document.getElementById("angle").innerHTML = x.angle;
+  document.getElementById("brake").innerHTML = x.accelSet;
+  document.getElementById("size").innerHTML = x.size;
+};
+
 //Initiate map on webpage
 function initMap() {
   //Create map and place on webpage using DOM centering it around pre-determined LAT&LONG
@@ -101,7 +119,7 @@ function initMap() {
       map.setCenter(markerStore[name].position);
       map.setZoom(18); //sets zoom of map to specific marker
       $("#data").empty();
-      document.getElementById("data").innerHTML = JSON.stringify(x);
+      boxData(x);
     }
 
     // Declares what box is being clicked on

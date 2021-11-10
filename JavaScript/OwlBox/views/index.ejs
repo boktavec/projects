@@ -3,7 +3,7 @@
 
 <head>
  
-  <title>Simple Map</title>
+  <title>OwlBox</title>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <link rel="stylesheet" type="text/css" href="/css/styles.css" />
  
@@ -12,29 +12,89 @@
 
 
 <body>
-  <div class="gridWrap">
-    <div class="gridCol">
-      <div id="map"></div>
+  <div id="wrapper">
+    <div id="map"></div>
+    <div id="data">
+      <table>
+        <div class="box-title"><h2 id ="box-title">Box Data</h2></div>
+        <tr>
+          <th>OwlBoxID:</th>
+          <td class="databox" id="obID"></td>
+        </tr>
+        <tr>
+          <th>MsgCnt:</th>
+          <td class="databox" id="msgCnt"></td>
+        </tr>
+        <tr>
+          <th>TempID:</th>
+          <td class="databox" id="tempID"></td>
+        </tr>
+        <tr>
+          <th>Time:</th>
+          <td class="databox" id="time"></td>
+        </tr>
+        <tr>
+          <th>Latitude:</th>
+          <td class="databox" id="lat"></td>
+        </tr>
+        <tr>
+          <th>Longitude:</th>
+          <td class="databox" id="long"></td>
+        </tr>
+        <tr>
+          <th>Elevation:</th>
+          <td class="databox" id="elev"></td>
+        </tr>
+        <tr>
+          <th>Accuracy:</th>
+          <td class="databox" id="acc"></td>
+        </tr>
+        <tr>
+          <th>Transmission:</th>
+          <td class="databox" id="trans"></td>
+        </tr>
+        <tr>
+          <th>Speed:</th>
+          <td class="databox" id="speed"></td>
+        </tr>
+        <tr>
+          <th>Heading:</th>
+          <td class="databox" id="head"></td>
+        </tr>
+        <tr>
+          <th>Angle:</th>
+          <td class="databox" id="angle"></td>
+        </tr>
+        <tr>
+          <th>Acceleration:</th>
+          <td class="databox" id="accel"></td>
+        </tr>
+        <tr>
+          <th>Brakes:</th>
+          <td class="databox" id="brake"></td>
+        </tr>
+        <tr>
+          <th>Size:</th>
+          <td class="databox" id="size"></td>
+        </tr>
+      </table>
     </div>
-    <div class="gridCol">
-      <div id="data">
+    <div class="boxSelector">
+      <div class="locSel">
+        <span id="allSel">HOME</span>
+        <span id="ksuSel">KSU</span>
+        <span id="ptcSel">PTC</span>
       </div>
-    </div>
-  </div>
-  <div class="boxSelector">
-    <!-- Containers for location selection -->
-    <div class="locSel">
-      <span id="allSel">HOME</span>
-      <span id="ksuSel">KSU</span>
-      <span id="ptcSel">PTC</span>
-    </div>
-    <!-- Containers for box selection -->
-    <div class="location" id="ptc">
-    </div>
-    <div class="location" id="ksaw">
-    </div>
-    
 
+      <div class="location" id="ptc">
+      </div>
+      <div class="location" id="ksaw">
+      </div>
+    </div> 
+  </div>
+  <div class="buttons-center flex-parent">
+    <button type="button">Record</button>
+    <button type="button">Save</button>
   </div>
 
 

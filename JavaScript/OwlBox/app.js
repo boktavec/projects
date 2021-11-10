@@ -96,6 +96,7 @@ io.on("connection", (socket) => {
 client.on("message-complete", (data) => {
   //Convert data to string and JSON parse it so it is usable
   let x = JSON.parse(String.fromCharCode.apply(String, data));
+  console.log(x);
 
   if (select === "kennesaw" && locFilter(x) === 0) {
     //send kennesaw data
