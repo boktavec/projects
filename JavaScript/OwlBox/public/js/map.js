@@ -1,3 +1,8 @@
+// Import Config file
+f = open("../../config.json");
+conf = json.load(f);
+f.close();
+
 let map;
 const image = "https://img.icons8.com/fluent/48/000000/car-top-view.png"; //Marker image
 
@@ -12,9 +17,9 @@ let markerStore = {};
 const socket = io();
 
 //Initiate all the necessary locations
-const home = { lat: xx.xxxxxx, lng: xx.xxxxxx }; //Initial coordinates to center the map and marker
-const ksaw = { lat: xx.xxxxxx, lng: xx.xxxxxx }; //Coordinates for Marietta campus of KSAW
-const ptc = { lat: xx.xxxxxx, lng: xx.xxxxxx }; //Coordinates for city hall Peachtree Corners
+const home = { lat: conf["home"]["lat"], lng: conf["home"]["long"] }; //Initial coordinates to center the map and marker
+const ksaw = { lat: conf["ksaw"]["lat"], lng: conf["ksaw"]["long"] }; //Coordinates for Marietta campus of KSAW
+const ptc = { lat: conf["ptc"]["lat"], lng: conf["ptc"]["long"] }; //Coordinates for city hall Peachtree Corners
 
 // Creates link to box depending on location and if the container link already exists
 let boxCar = (id) => {
@@ -115,19 +120,19 @@ function initMap() {
   // Once data is received through the socket
   socket.on("data", (x) => {
     // Pull the name out of the JSON object and remove the quotes from it
-    let id = x.id;
+    let id = x.owlboxID;
     let name = id.replace(/^["'](.+(?=["']$))["']$/, "$1");
 
     // Check the Marker Store object and if the name already exist within the change the position of the marker value.
     if (markerStore.hasOwnProperty(name)) {
-      markerStore[name].setPosition({ lat: x.Lat, lng: x.Lon });
+      markerStore[name].setPosition({ lat: x.lat, lng: x.long });
       if (!$("#" + name + "").length) {
         boxCar(name); //Creates box container within the correct location container
       }
       // Otherwise create the marker and add it the the marker store object
     } else {
       let marker = new google.maps.Marker({
-        position: { lat: x.Lat, lng: x.Lon },
+        position: { lat: x.lat, lng: x.long },
         map: map,
         title: name,
         icon: image, //image of car marker

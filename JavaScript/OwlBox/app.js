@@ -1,3 +1,8 @@
+// Import Config file
+f = open("config.json");
+conf = json.load(f);
+f.close();
+
 // Create and initiate Express server
 const { json } = require("express");
 const express = require("express");
@@ -21,12 +26,12 @@ const json2csv = require("json2csv");
 
 let select = ""; //Location selection
 let recStatus = ""; //Status of recorder
-let recording = []; //Holds the recordede data
+let recording = []; //Holds the recorded data
 let dataCSV; //CSV file to be downloaded
 
 //Socket location
-const ADDRESS = "";
-const PORT = "";
+const ADDRESS = conf["client"]["ip"];
+const PORT = conf["client"]["port"];
 
 let select = ""; //Location selection
 
@@ -120,7 +125,6 @@ io.on("connection", (socket) => {
 client.on("message-complete", (data) => {
   //Convert data to string and JSON parse it so it is usable
   let x = JSON.parse(String.fromCharCode.apply(String, data));
-  console.log(x);
 
   if (select === "kennesaw" && locFilter(x) === 0) {
     //send kennesaw data
