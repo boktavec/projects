@@ -1,7 +1,5 @@
 // Import Config file
-f = open("config.json");
-conf = json.load(f);
-f.close();
+let config = require("./config.json");
 
 // Create and initiate Express server
 const { json } = require("express");
@@ -30,8 +28,8 @@ let recording = []; //Holds the recorded data
 let dataCSV; //CSV file to be downloaded
 
 //Socket location
-const ADDRESS = conf["client"]["ip"];
-const PORT = conf["client"]["port"];
+const ADDRESS = `${config.client.ip}`;
+const PORT = `${config.client.port}`;
 
 let select = ""; //Location selection
 

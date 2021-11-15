@@ -1,7 +1,5 @@
 // Import Config file
-f = open("../../config.json");
-conf = json.load(f);
-f.close();
+let config = require("../../config.json");
 
 let map;
 const image = "https://img.icons8.com/fluent/48/000000/car-top-view.png"; //Marker image
@@ -17,9 +15,9 @@ let markerStore = {};
 const socket = io();
 
 //Initiate all the necessary locations
-const home = { lat: conf["home"]["lat"], lng: conf["home"]["long"] }; //Initial coordinates to center the map and marker
-const ksaw = { lat: conf["ksaw"]["lat"], lng: conf["ksaw"]["long"] }; //Coordinates for Marietta campus of KSAW
-const ptc = { lat: conf["ptc"]["lat"], lng: conf["ptc"]["long"] }; //Coordinates for city hall Peachtree Corners
+const home = { lat: `${config.home.lat}`, lng: `${config.home.long}` }; //Initial coordinates to center the map and marker
+const ksaw = { lat: `${config.ksaw.lat}`, lng: `${config.ksaw.long}` }; //Coordinates for Marietta campus of KSAW
+const ptc = { lat: `${config.ptc.lat}`, lng: `${config.ptc.long}` }; //Coordinates for city hall Peachtree Corners
 
 // Creates link to box depending on location and if the container link already exists
 let boxCar = (id) => {
