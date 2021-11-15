@@ -16,6 +16,14 @@ const utmObj = require("utm-latlng");
 const utm = new utmObj();
 const client = dgram.createSocket("udp4");
 
+//Initiate Array Object to CSV file
+const json2csv = require("json2csv");
+
+let select = ""; //Location selection
+let recStatus = ""; //Status of recorder
+let recording = []; //Holds the recordede data
+let dataCSV; //CSV file to be downloaded
+
 //Socket location
 const ADDRESS = "";
 const PORT = "";
@@ -90,6 +98,22 @@ io.on("connection", (socket) => {
     console.log("client selected PTC location");
     select = "ptc";
   });
+
+  //Start recording, stop recording and save recording
+  socket.on("record", () => {
+    console.log("start recording");
+    recStatus = "rec";
+  });
+
+  socket.on("stop", () => {
+    console.log("stop");
+    recStatus = "stop";
+  });
+
+  socket.on("save", () => {
+    recStatus = "stop";
+    dataCSV = json2csv.parse(recording);
+  });
 });
 
 //Filter and send data to a room
@@ -101,15 +125,35 @@ client.on("message-complete", (data) => {
   if (select === "kennesaw" && locFilter(x) === 0) {
     //send kennesaw data
     io.to("room-kennesaw").emit("data", x);
+    //Record and Save drive
+    while (recStatus === "rec") {
+      recording.push(x);
+    }
   } else if (select === "ptc" && locFilter(x) === 1) {
     //send ptc data
     io.to("room-ptc").emit("data", x);
+    //Record and Save drive
+    while (recStatus === "rec") {
+      recording.push(x);
+    }
   }
 });
 
 //render index page on path '/'
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+//Download page to download the csv file
+app.get("/download", (req, res) => {
+  let date = Date.now();
+  res.setHeader(
+    "Content-disposition",
+    "attachment; filename=" + date + "-owlbox.csv"
+  );
+  res.set("Content-Type", "text/csv");
+  res.status(200).send(dataCSV);
+  recording.length = 0;
 });
 
 //listen for/access server on localhost port 3000

@@ -89,6 +89,29 @@ function initMap() {
     socket.emit("selPTC"); //Joins PTC room
   });
 
+  //Record, Stop and Save
+  $("#record").click(() => {
+    console.log("Start Recording");
+    document.getElementById("record").style.display = "none"; //hides record button
+    document.getElementById("stop").style.display = "inherit"; //show stop button
+    socket.emit("record"); //Start recording
+  });
+
+  $("#stop").click(() => {
+    console.log("Stop Recording");
+    document.getElementById("record").style.display = "initial"; //show record button
+    document.getElementById("stop").style.display = "none"; //hide stop button
+    socket.emit("stop");
+  });
+
+  $("#save").click(() => {
+    console.log("Save Data");
+    socket.emit("save"); //Save recording
+    document.getElementById("record").style.display = "initial"; //show record button
+    document.getElementById("stop").style.display = "none"; //hide stop button
+    window.open("url/download");
+  });
+
   // Once data is received through the socket
   socket.on("data", (x) => {
     // Pull the name out of the JSON object and remove the quotes from it

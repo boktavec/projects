@@ -87,6 +87,9 @@
   display: none;
 }
 
+#stop {
+  display: none;
+}
 /**********************ELEMENT***********************/
 
 html,
