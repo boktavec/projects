@@ -22,7 +22,6 @@ const client = dgram.createSocket("udp4");
 //Initiate Array Object to CSV file
 const json2csv = require("json2csv");
 
-let select = ""; //Location selection
 let recStatus = ""; //Status of recorder
 let recording = []; //Holds the recorded data
 let dataCSV; //CSV file to be downloaded
@@ -106,6 +105,7 @@ io.on("connection", (socket) => {
   socket.on("record", () => {
     console.log("start recording");
     recStatus = "rec";
+    recording.length = 0;
   });
 
   socket.on("stop", () => {
@@ -139,6 +139,9 @@ client.on("message-complete", (data) => {
       recording.push(x);
     }
   }
+  while (recStatus === "rec") {
+    io.emit("play", x);
+  }
 });
 
 //render index page on path '/'
@@ -156,6 +159,10 @@ app.get("/download", (req, res) => {
   res.set("Content-Type", "text/csv");
   res.status(200).send(dataCSV);
   recording.length = 0;
+});
+
+app.get("/run", (req, res) => {
+  res.render("run");
 });
 
 //listen for/access server on localhost port 3000

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+ 
+  <title>OwlBox</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+ 
+</head>
+<script src = "/socket.io/socket.io.js"></script>
+
+<body>
+
+    <div id="wrapper">
+        <div id="map"></div>
+        <div id="data">
+          <table>
+            <div class="box-title"><h2 id ="box-title">Box Data</h2></div>
+            <tr>
+              <th>OwlBoxID:</th>
+              <td class="databox" id="obID"></td>
+            </tr>
+            <tr>
+              <th>MsgCnt:</th>
+              <td class="databox" id="msgCnt"></td>
+            </tr>
+            <tr>
+              <th>TempID:</th>
+              <td class="databox" id="tempID"></td>
+            </tr>
+            <tr>
+              <th>Time:</th>
+              <td class="databox" id="time"></td>
+            </tr>
+            <tr>
+              <th>Latitude:</th>
+              <td class="databox" id="lat"></td>
+            </tr>
+            <tr>
+              <th>Longitude:</th>
+              <td class="databox" id="long"></td>
+            </tr>
+            <tr>
+              <th>Elevation:</th>
+              <td class="databox" id="elev"></td>
+            </tr>
+            <tr>
+              <th>Accuracy:</th>
+              <td class="databox" id="acc"></td>
+            </tr>
+            <tr>
+              <th>Transmission:</th>
+              <td class="databox" id="trans"></td>
+            </tr>
+            <tr>
+              <th>Speed:</th>
+              <td class="databox" id="speed"></td>
+            </tr>
+            <tr>
+              <th>Heading:</th>
+              <td class="databox" id="head"></td>
+            </tr>
+            <tr>
+              <th>Angle:</th>
+              <td class="databox" id="angle"></td>
+            </tr>
+            <tr>
+              <th>Acceleration:</th>
+              <td class="databox" id="accel"></td>
+            </tr>
+            <tr>
+              <th>Brakes:</th>
+              <td class="databox" id="brake"></td>
+            </tr>
+            <tr>
+              <th>Size:</th>
+              <td class="databox" id="size"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="boxSelector">
+          <div class="locSel">
+            <span id="allSel">HOME</span>
+            <span id="ksuSel">KSU</span>
+            <span id="ptcSel">PTC</span>
+          </div>
+    
+          <div class="location" id="ptc">
+          </div>
+          <div class="location" id="ksaw">
+          </div>
+        </div> 
+      </div>
+      <div class="buttons-center flex-parent">
+        <button id="play" type="button">Play</button>
+        <!-- <button id="restart" type="button">Restart</button> -->
+      </div>
+
+  <!-- Async script executes immediately and must be after any DOM elements used in callback. --> 
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsLlWYVdrag3vSPJJSGiZwlJJI50ky7Z8&callback=initMap&libraries=&v=weekly"
+  async
+></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/js/run.js"></script>  <!-- js of initializing map and displaying/looping through marker-->
+
+</body>
+
+</html>

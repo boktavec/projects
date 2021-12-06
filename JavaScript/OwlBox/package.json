@@ -5,9 +5,17 @@
   "main": "app.js",
   "dependencies": {
     "cors": "^2.8.5",
+    "dgram": "^1.0.1",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "nodemon": "^2.0.12"
+    "http": "0.0.1-security",
+    "json2csv": "^5.0.6",
+    "nodemon": "^2.0.12",
+    "point-in-polygon": "^1.1.0",
+    "socket.io": "^4.3.2",
+    "udp-json": "^1.2.1",
+    "utm-latlng": "^1.0.6",
+    "v8": "^0.1.0"
   },
   "devDependencies": {},
   "scripts": {
