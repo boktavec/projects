@@ -14,7 +14,7 @@ public class Movies {
         this.movieName = movieName.toLowerCase();
         this.movieTime = movieTime;
         this.movieDate = movieDate;
-        this.movieTheater = movieTheater.toUpperCase();
+        this.movieTheater = movieTheater.toLowerCase();
         this.moviePrice = moviePrice;
         this.movieSeats = movieSeats;
 
