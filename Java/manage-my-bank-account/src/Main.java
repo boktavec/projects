@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class MyAccount {
+public class Main {
 
     static String name = "Tyler James";
     static double balance = 1000.00;

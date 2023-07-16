@@ -10,7 +10,7 @@ import static CRUD.ReadContact.viewContact;
 import static Find.ListAlphabeticalAZ.alphabeticalListAZ;
 import static Find.ListAlphabeticalZA.alphabeticalListZA;
 
-public class ContactManager {
+public class Main {
     public static void main(String[] args) {
 
         ArrayList<Contact> contactList = new ArrayList<>();

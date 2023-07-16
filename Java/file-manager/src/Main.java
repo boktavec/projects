@@ -8,7 +8,7 @@ import static CRUD.DeleteFile.*;
 
 import java.util.Scanner;
 
-public class FileManager {
+public class Main {
 
     public static void main(String[] args) {
 

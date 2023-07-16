@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class TemperatureConverter {
+public class Main {
     static double temp, converted;
 
 

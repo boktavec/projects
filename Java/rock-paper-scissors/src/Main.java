@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class RpsGame {
+public class Main {
     static String answer, winner;
 
     public static void main(String[] args) {

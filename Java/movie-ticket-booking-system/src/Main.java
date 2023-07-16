@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import static functionality.BookTicket.bookTicket;
 
-public class TicketBookingSystem {
+public class Main {
 
     public static Databases movieTheater = new Databases();
     static ArrayList<Integer> movieSeats = new ArrayList();
