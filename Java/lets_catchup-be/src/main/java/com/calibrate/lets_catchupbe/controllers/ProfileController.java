@@ -60,7 +60,3 @@ class FriendRequest {
 
 }
 
-//@Getter @AllArgsConstructor @NoArgsConstructor
-//class Login {
-//    private String email;
-//        }
