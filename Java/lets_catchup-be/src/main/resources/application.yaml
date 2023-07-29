@@ -1,11 +1,5 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://boktavec:TigerKing24@cluster90210.iobs8.mongodb.net/
-      database: letscatchup
-
-#spring:
-#  data:
-#    mongodb:
-#      uri: URI_URL
-#      database: DATABASE_NAME
+      uri: URI_URL
+      database: DATABASE_NAME
